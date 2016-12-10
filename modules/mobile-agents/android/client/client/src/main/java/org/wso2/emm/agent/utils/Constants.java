@@ -18,8 +18,6 @@
 
 package org.wso2.emm.agent.utils;
 
-import android.util.Log;
-
 /**
  * This class holds all the constants used throughout the application.
  */
@@ -38,11 +36,11 @@ public class Constants {
 	public static final String REG_ID = "regId";
 	public static final String NOTIFIER_LOCAL = "LOCAL";
 	public static final String NOTIFIER_GCM = "GCM";
-	public static final String SERVER_PORT = "80";
-	public static final String SERVER_PROTOCOL = "http://";
+	public static final String SERVER_PORT = "443";
+	public static final String SERVER_PROTOCOL = "https://"; // changed by pvmagacho
 	public static final String HTTPS_PROTOCOL = "https://";
 	public static final String API_VERSION = "1.0.0/";
-	public static final String API_SERVER_PORT = "80";
+	public static final String API_SERVER_PORT = "443"; // changed by pvmagacho
 	public static final String OWNERSHIP_BYOD = "BYOD";
 	public static final String OWNERSHIP_COPE = "COPE";
 	// Set DEFAULT_OWNERSHIP to null if no overiding is needed. Other possible values are,

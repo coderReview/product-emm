@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "919081834526",
-    "firebase_url": "https://wewrweragent.firebaseio.com",
-    "project_id": "wso2agent",
-    "storage_bucket": "wso2agent.appspot.com"
+    "project_number": "955803178318",
+    "firebase_url": "https://emm-gcm-150523.firebaseio.com",
+    "project_id": "emm-gcm-150523",
+    "storage_bucket": "emm-gcm-150523.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:917891897426:android:cb1a80b8fbeae4c0",
+        "mobilesdk_app_id": "1:955803178318:android:f84d2255cd64c697",
         "android_client_info": {
-          "package_name": "org.wso2.emm.agent"
+          "package_name": "com.apptask.launcher"
         }
       },
       "oauth_client": [
         {
-          "client_id": "9234081897234-j4f7tdaj1c6rad7bmqac05k3f3du66m1.apps.googleusercontent.com",
+          "client_id": "955803178318-m4u1lhmblklvs1hk7ifi0il9294i69m8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.apptask.launcher",
+            "certificate_hash": "F4608BA3E35FB6CD35EEC73F20FE0A199C1B9D48"
+          }
+        },
+        {
+          "client_id": "955803178318-9tn8mm6h2e5jgqt8r377f0fcn6gh047h.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "rerwerwwerwerwerwer"
+          "current_key": "AIzaSyC8ua9iOhclt9Xazo40QCr49YUyHPigW6E"
         }
       ],
       "services": {
@@ -29,8 +37,57 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "955803178318-9tn8mm6h2e5jgqt8r377f0fcn6gh047h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955803178318:android:cb1a80b8fbeae4c0",
+        "android_client_info": {
+          "package_name": "org.wso2.emm.agent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "955803178318-oloekddtjjs8necm9oteqeesv10spgte.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "org.wso2.emm.agent",
+            "certificate_hash": "F4608BA3E35FB6CD35EEC73F20FE0A199C1B9D48"
+          }
+        },
+        {
+          "client_id": "955803178318-9tn8mm6h2e5jgqt8r377f0fcn6gh047h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8ua9iOhclt9Xazo40QCr49YUyHPigW6E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "955803178318-9tn8mm6h2e5jgqt8r377f0fcn6gh047h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
