@@ -62,7 +62,7 @@ public class Constants {
 	public static final boolean SKIP_LICENSE = false;
 	public static final boolean HIDE_LOGIN_UI = false;
 	public static final boolean HIDE_UNREGISTER_BUTTON = false;
-	public static final boolean SKIP_WORK_PROFILE_CREATION = false;
+	public static final boolean SKIP_WORK_PROFILE_CREATION = true;
 	public static final boolean HIDE_ERROR_DIALOG = false;
 
 	/**
@@ -114,7 +114,7 @@ public class Constants {
 	public static final String POLICY_ENDPOINT = SERVER_APP_ENDPOINT + "policy/";
 	public static final String EVENT_ENDPOINT = SERVER_APP_ENDPOINT + "events/";
 	public static final String CATALOG_APP_PACKAGE_NAME = "org.wso2.app.catalog";
-	public static final String TRUSTSTORE_PASSWORD = "wso2carbon";
+	public static final String TRUSTSTORE_PASSWORD = "Aroma_181";
 	public static final String EULA_TITLE = "POLICY AGREEMENT";
 	public static final String EULA_TEXT = "Test policy agreement.";
 
