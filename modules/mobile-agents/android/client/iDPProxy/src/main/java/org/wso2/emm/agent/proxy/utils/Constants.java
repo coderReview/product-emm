@@ -51,9 +51,9 @@ public class Constants {
 		public static final int DEFAULT_TIME_OUT = 30000;
 	}
 
-	public static final String SERVER_PROTOCOL = "http://";
-	public static final String TRUSTSTORE_PASSWORD = "wso2carbon";
-	public static final String KEYSTORE_PASSWORD = "wso2carbon";
+	public static final String SERVER_PROTOCOL = "https://";
+	public static final String TRUSTSTORE_PASSWORD = "Aroma_181";
+	public static final String KEYSTORE_PASSWORD = "Aroma_181";
 	public static final String TRUSTSTORE_LOCATION = null;
 	public static final String KEYSTORE_LOCATION = null;
 	public static final boolean DEBUG_ENABLED = false;
