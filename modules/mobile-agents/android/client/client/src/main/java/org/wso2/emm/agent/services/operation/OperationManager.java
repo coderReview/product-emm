@@ -766,7 +766,7 @@ public abstract class OperationManager implements APIResultCallBack, VersionBase
             operation.setStatus(resources.getString(R.string.operation_value_completed));
             resultBuilder.build(operation);
             NotificationCompat.Builder mBuilder =   new NotificationCompat.Builder(context)
-                    .setSmallIcon(R.drawable.ic_launcher)
+                    .setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle(context.getString(R.string.alert_message))
                     .setContentText(message)
                     .setAutoCancel(true)
