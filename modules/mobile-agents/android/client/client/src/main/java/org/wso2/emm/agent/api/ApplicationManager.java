@@ -282,7 +282,17 @@ public class ApplicationManager {
             Preference.putString(context, context.getResources().getString(
                     R.string.app_install_status), context.getResources().getString(
                     R.string.app_status_value_installed));
-            startInstallerIntent(fileUri);
+
+            PackageManager pm = context.getPackageManager();
+            PackageInfo info = pm.getPackageArchiveInfo(fileUri.getPath(), PackageManager.GET_ACTIVITIES);
+            if (isSystemPackage(info)) {
+                // this is a system app
+                silentInstallSystemApp(fileUri, info.packageName);
+                return;
+            }
+
+            // not a system app
+            silentInstallApp(fileUri);
         }
     }
 
@@ -753,6 +763,77 @@ public class ApplicationManager {
             }
         };
         queue.add(request);
+    }
+
+    private void silentInstallSystemApp(final Uri uri, final String packageName) {
+        if (Constants.DEBUG_MODE_ENABLED) {
+            Log.d(TAG, "Installing system app");
+        }
+
+        // install
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int result;
+                try {
+                    // move apk to /system/app folder
+                    Process proc = Runtime.getRuntime().exec(new String[] { "su", "-c", String.format("mv %s /system/app/%s.apk", uri.getPath(), packageName) } );
+                    result = proc.waitFor();
+                    if (result != 0) {
+                        return;
+                    }
+
+                    // set permission
+                    proc = Runtime.getRuntime().exec(new String[] { "su", "-c", String.format("chmod 644 /system/app/%s.apk", packageName) } );
+                    result = proc.waitFor();
+                    if (result != 0) {
+                        return;
+                    }
+
+                    if (Constants.DEBUG_MODE_ENABLED) {
+                        Log.d(TAG, "rebooting system");
+                    }
+
+                    // reboot system
+                    Runtime.getRuntime().exec(new String[] { "su", "-c", "/system/bin/reboot" } );
+                } catch (Exception e) {
+                    Log.e(TAG, "Error installing app", e);
+                }
+            }
+        }).start();
+    }
+
+    private void silentInstallApp(final Uri uri) {
+        if (Constants.DEBUG_MODE_ENABLED) {
+            Log.d(TAG, "Installing app");
+        }
+
+        // install
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String command = "pm install -r " + uri.getPath();
+                int result;
+                try {
+                    Process proc = Runtime.getRuntime().exec("chmod 644 " + uri.getPath());
+                    proc.waitFor();
+                    proc = Runtime.getRuntime().exec(new String[] { "su", "-c", command } );
+                    result = proc.waitFor();
+                } catch (Exception e) {
+                    result = -1;
+                    Log.e(TAG, "Error installing app", e);
+                }
+
+                if (result != 0) {
+                    startInstallerIntent(uri);
+                    return;
+                }
+
+                if (Constants.DEBUG_MODE_ENABLED) {
+                    Log.d(TAG, "App installed");
+                }
+            }
+        }).start();
     }
 
 }

@@ -19,20 +19,17 @@
 package org.wso2.emm.agent.proxy.clients;
 
 import android.util.Log;
+
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.Volley;
+
 import org.wso2.emm.agent.proxy.IDPTokenManagerException;
 import org.wso2.emm.agent.proxy.IdentityProxy;
 import org.wso2.emm.agent.proxy.R;
 import org.wso2.emm.agent.proxy.utils.Constants;
 import org.wso2.emm.agent.proxy.utils.StreamHandlerUtil;
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocketFactory;
-import javax.net.ssl.TrustManagerFactory;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -45,6 +42,13 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.util.Map;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManagerFactory;
 
 public class OAuthSSLClient implements CommunicationClient {
     private static final String TAG = OAuthSSLClient.class.getName();
@@ -67,17 +71,19 @@ public class OAuthSSLClient implements CommunicationClient {
                 TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
                 tmf.init(localTrustStore);
 
-
                 SSLContext context = SSLContext.getInstance("TLS");
                 context.init(null, tmf.getTrustManagers(), null);
                 final SSLSocketFactory socketFactory = context.getSocketFactory();
                 HurlStack hurlStack = new HurlStack() {
                     @Override
                     protected HttpURLConnection createConnection(URL url) throws IOException {
-                        HttpsURLConnection httpsURLConnection = (HttpsURLConnection) super.createConnection(url);
-                        httpsURLConnection.setSSLSocketFactory(socketFactory);
-                        httpsURLConnection.setHostnameVerifier(getHostnameVerifier());
-                        return httpsURLConnection;
+                        HttpURLConnection connection = super.createConnection(url);
+                        if (connection instanceof HttpsURLConnection) {
+                            HttpsURLConnection httpsURLConnection = (HttpsURLConnection) connection;
+                            httpsURLConnection.setSSLSocketFactory(socketFactory);
+                            httpsURLConnection.setHostnameVerifier(getHostnameVerifier());
+                        }
+                        return connection;
                     }
                 };
                 client = Volley.newRequestQueue(IdentityProxy.getInstance().getContext(), hurlStack);
