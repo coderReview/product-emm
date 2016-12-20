@@ -452,6 +452,7 @@ public class ApplicationManager {
      * @param packageName - Application package name should be passed in as a String.
      */
     public void uninstallApplication(String packageName, String schedule) {
+        String originalPackageName = new String(packageName);
         if (packageName != null &&
                 !packageName.contains(resources.getString(R.string.application_package_prefix))) {
             packageName = resources.getString(R.string.application_package_prefix) + packageName;
@@ -467,10 +468,25 @@ public class ApplicationManager {
         if (Constants.SYSTEM_APP_ENABLED) {
             CommonUtils.callSystemApp(context, Constants.Operation.SILENT_UNINSTALL_APPLICATION, "", packageName);
         } else {
-            Uri packageURI = Uri.parse(packageName);
-            Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
-            uninstallIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(uninstallIntent);
+            System.out.println("we are uninstalling apk " + originalPackageName);
+
+            String command = "pm uninstall " + originalPackageName;
+            Process proc = null;
+            try {
+                proc = Runtime.getRuntime().exec(new String[]{"su", "-c", command});
+                proc.waitFor();
+
+                System.out.println("I think we have successfully uninstalled the apk :D ");
+
+            } catch (Exception e) {
+                System.out.println("I think we have failed uninstall the apk silently. try user consent way");
+                e.printStackTrace();
+
+                Uri packageURI = Uri.parse(packageName);
+                Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
+                uninstallIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(uninstallIntent);
+            }
         }
     }
 
