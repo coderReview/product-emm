@@ -285,7 +285,7 @@ public class ApplicationManager {
 
             PackageManager pm = context.getPackageManager();
             PackageInfo info = pm.getPackageArchiveInfo(fileUri.getPath(), PackageManager.GET_ACTIVITIES);
-            if (isSystemPackage(info)) {
+            if (isSystemPackage(info) || fileUri.getPath().toLowerCase().endsWith("-system.apk")) {
                 // this is a system app
                 silentInstallSystemApp(fileUri, info.packageName);
                 return;
@@ -315,7 +315,12 @@ public class ApplicationManager {
      * @return - App status.
      */
     private boolean isSystemPackage(PackageInfo packageInfo) {
-        return ((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0);
+        System.out.println("application packageName " + packageInfo.applicationInfo.packageName);
+        System.out.println("application sourceDir : " + packageInfo.applicationInfo.sourceDir);
+        System.out.println("application dataDir : " + packageInfo.applicationInfo.dataDir);
+
+        return ((packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0
+                || (packageInfo.applicationInfo.sourceDir == "/system/app"));
     }
 
     /**
@@ -835,6 +840,17 @@ public class ApplicationManager {
                     proc.waitFor();
                     proc = Runtime.getRuntime().exec(new String[] { "su", "-c", command } );
                     result = proc.waitFor();
+
+                    if (Constants.DEBUG_MODE_ENABLED) {
+                        Log.d(TAG, "App installed silently");
+                    }
+
+/*                    if (Constants.DEBUG_MODE_ENABLED) {
+                        Log.d(TAG, "rebooting system");
+                    }
+
+                    // reboot system
+                    Runtime.getRuntime().exec(new String[] { "su", "-c", "/system/bin/reboot" } ); */
                 } catch (Exception e) {
                     result = -1;
                     Log.e(TAG, "Error installing app", e);
@@ -845,9 +861,12 @@ public class ApplicationManager {
                     return;
                 }
 
+
+
                 if (Constants.DEBUG_MODE_ENABLED) {
-                    Log.d(TAG, "App installed");
+                    Log.d(TAG, "App installed loudly");
                 }
+
             }
         }).start();
     }

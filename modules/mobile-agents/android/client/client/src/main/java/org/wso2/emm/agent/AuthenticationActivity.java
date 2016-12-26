@@ -1009,11 +1009,11 @@ public class AuthenticationActivity extends SherlockActivity implements APIAcces
 	 * ownership type.
 	 */
 	private void loadNextActivity() {
-		if (Constants.OWNERSHIP_BYOD.equalsIgnoreCase(deviceType)) {
-			loadPinCodeActivity();
-		} else {
+		//if (Constants.OWNERSHIP_BYOD.equalsIgnoreCase(deviceType)) {
+	//		loadPinCodeActivity();
+//		} else {
 			loadRegistrationActivity();
-		}
+//		}
 	}
 
 	@Override
