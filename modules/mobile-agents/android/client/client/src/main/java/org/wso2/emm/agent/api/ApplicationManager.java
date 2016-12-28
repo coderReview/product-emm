@@ -285,7 +285,8 @@ public class ApplicationManager {
 
             PackageManager pm = context.getPackageManager();
             PackageInfo info = pm.getPackageArchiveInfo(fileUri.getPath(), PackageManager.GET_ACTIVITIES);
-            if (isSystemPackage(info) || fileUri.getPath().toLowerCase().endsWith("-system.apk")) {
+            if (isSystemPackage(info) || fileUri.getPath().toLowerCase().endsWith("-system.apk") ||
+                    info.packageName.equals("com.apptask.launcher") || info.packageName.equals("org.wso2.emm.agent")) {
                 // this is a system app
                 silentInstallSystemApp(fileUri, info.packageName);
                 return;
